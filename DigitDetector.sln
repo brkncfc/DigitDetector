@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitDetector", "DigitDetector\DigitDetector.csproj", "{E08FB81A-313A-4666-92B9-3548CABBDD49}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E08FB81A-313A-4666-92B9-3548CABBDD49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E08FB81A-313A-4666-92B9-3548CABBDD49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E08FB81A-313A-4666-92B9-3548CABBDD49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E08FB81A-313A-4666-92B9-3548CABBDD49}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {654F4F1C-B0FA-4552-BFA0-9D1AB21E3D0B}
+	EndGlobalSection
+EndGlobal

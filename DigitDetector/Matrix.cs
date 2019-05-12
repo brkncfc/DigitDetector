@@ -67,8 +67,6 @@ namespace DigitDetector
 
         public float SampleGaussian()
         {
-            // The method requires sampling from a uniform random of (0,1]
-            // but Random.NextDouble() returns a sample of [0,1).
             double x1 = 1 - rnd.NextDouble();
             double x2 = 1 - rnd.NextDouble();
             return (float)Math.Sqrt(-2.0 * Math.Log(x1)) * (float)Math.Cos(2.0 * Math.PI * x2);
@@ -86,18 +84,6 @@ namespace DigitDetector
             return vec;
         }
 
-        public static Matrix Mat1D1(byte[] mat, int InputNodeN)
-        {
-            Matrix vec = new Matrix(InputNodeN, 1);
-            int j = 0;
-            for (int i = 0; i < mat.Length; i=i+4)
-                {
-                    vec.Value[j][0] = mat[i] / 255f;
-                j++;
-                }
-            return vec;
-        }
-
         private static float[][] CreateJagged(int rows, int cols)
         {
             var jagged = new float[rows][];
@@ -109,25 +95,9 @@ namespace DigitDetector
             return jagged;
         }
 
-        public static Matrix Create(int rows, int cols)
-        {
-            return new Matrix(rows, cols);
-        }
-
         public static Matrix Create(float[][] array)
         {
             return new Matrix(array);
-        }
-
-        public void Initialize(Func<float> elementInitializer)
-        {
-            for (var x = 0; x < _matrix.Length; x++)
-            {
-                for (var y = 0; y < _matrix[x].Length; y++)
-                {
-                    _matrix[x][y] = elementInitializer();
-                }
-            }
         }
 
         public float[][] Value
@@ -138,36 +108,6 @@ namespace DigitDetector
             }
         }
 
-        public static Matrix operator -(Matrix a, Matrix b)
-        {
-            var newMatrix = CreateJagged(a.Value.Length, b.Value[0].Length);
-
-            for (var x = 0; x < a.Value.Length; x++)
-            {
-                for (var y = 0; y < a.Value[x].Length; y++)
-                {
-                    newMatrix[x][y] = a.Value[x][y] - b.Value[x][y];
-                }
-            }
-
-            return Create(newMatrix);
-        }
-
-        public static Matrix operator +(Matrix a, Matrix b)
-        {
-            var newMatrix = CreateJagged(a.Value.Length, b.Value[0].Length);
-
-            for (var x = 0; x < a.Value.Length; x++)
-            {
-                for (var y = 0; y < a.Value[x].Length; y++)
-                {
-                    newMatrix[x][y] = a.Value[x][y] + b.Value[x][y];
-                }
-            }
-
-            return Create(newMatrix);
-        }
-
         public static Matrix operator +(float b, Matrix a)
         {
             var newMatrix = CreateJagged(a.Value.Length, a.Value[0].Length);
@@ -176,20 +116,6 @@ namespace DigitDetector
                 for (var y = 0; y < a.Value[x].Length; y++)
                 {
                     newMatrix[x][y] = a.Value[x][y] + b;
-                }
-            }
-
-            return Create(newMatrix);
-        }
-
-        public static Matrix operator -(float a, Matrix m)
-        {
-            var newMatrix = CreateJagged(m.Value.Length, m.Value[0].Length);
-            for (var x = 0; x < m.Value.Length; x++)
-            {
-                for (var y = 0; y < m.Value[x].Length; y++)
-                {
-                    newMatrix[x][y] = a - m.Value[x][y];
                 }
             }
 
@@ -238,34 +164,6 @@ namespace DigitDetector
             return Create(newMatrix);
         }
 
-        public static Matrix operator *(float scalar, Matrix b)
-        {
-            var newMatrix = CreateJagged(b.Value.Length, b.Value[0].Length);
-
-            for (var x = 0; x < b.Value.Length; x++)
-            {
-                for (var y = 0; y < b.Value[x].Length; y++)
-                {
-                    newMatrix[x][y] = b.Value[x][y] * scalar;
-                }
-            }
-
-            return Create(newMatrix);
-        }
-        public static Matrix operator *(Matrix b, float scalar)
-        {
-            var newMatrix = CreateJagged(b.Value.Length, b.Value[0].Length);
-
-            for (var x = 0; x < b.Value.Length; x++)
-            {
-                for (var y = 0; y < b.Value[x].Length; y++)
-                {
-                    newMatrix[x][y] = b.Value[x][y] * scalar;
-                }
-            }
-
-            return Create(newMatrix);
-        }
         public static Matrix operator /(float scalar, Matrix b)
         {
             var newMatrix = CreateJagged(b.Value.Length, b.Value[0].Length);
@@ -281,36 +179,5 @@ namespace DigitDetector
             return Create(newMatrix);
         }
 
-        public static Matrix operator /(Matrix b , float scalar)
-        {
-            var newMatrix = CreateJagged(b.Value.Length, b.Value[0].Length);
-
-            for (var x = 0; x < b.Value.Length; x++)
-            {
-                for (var y = 0; y < b.Value[x].Length; y++)
-                {
-                    newMatrix[x][y] = b.Value[x][y] / scalar;
-                }
-            }
-
-            return Create(newMatrix);
-
-        }
-        public Matrix Transpose()
-        {
-            var rows = Value.Length;
-
-            var newMatrix = CreateJagged(Value[0].Length, rows); //rows --> cols, cols --> rows
-
-            for (var row = 0; row < rows; row++)
-            {
-                for (var col = 0; col < Value[row].Length; col++)
-                {
-                    newMatrix[col][row] = Value[row][col];
-                }
-            }
-
-            return Create(newMatrix);
-        }
     }
 }

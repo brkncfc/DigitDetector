@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace DigitDetector
 {
@@ -25,7 +20,7 @@ namespace DigitDetector
     public class NeuralNetwork
     {
         private int InputNodeN, Layer1NodeN, Layer2NodeN, OutNodeN;
-        public Matrix a1, a2, a3, z1, z2, z3, del3, W1, W2, W3, W1_delta, W2_delta, W3_delta, Err, In, InLabel;
+        public Matrix a1, a2, a3, z1, z2, z3, del3, W1, W2, W3;
         public Weight Weights;
 
         public NeuralNetwork(Form1 form, int inputs, int L1Nodes, int L2Nodes, int outNodes)
@@ -36,19 +31,13 @@ namespace DigitDetector
             OutNodeN = outNodes;
 
             W1 = new Matrix(L1Nodes, inputs);
-            W1_delta = new Matrix(L1Nodes, inputs);
             W1.Randomize();
 
             W2 = new Matrix(L2Nodes, L1Nodes);
-            W2_delta = new Matrix(L2Nodes, L1Nodes);
-            W2.Randomize();
+            W2.Randomize();//
 
             W3 = new Matrix(outNodes, L2Nodes);
-            W3_delta = new Matrix(outNodes, L2Nodes);
             W3.Randomize();
-
-            Err = new Matrix(outNodes, 1);
-            InLabel = new Matrix(outNodes, 1);
 
             SaveLoad.Load(this);
             W1 = Weights.W1;
@@ -58,8 +47,8 @@ namespace DigitDetector
 
         public int GuessDrawing(float[,] mat)
         {
-            Matrix IN1 = Matrix.Mat1D(mat, InputNodeN);
-            z1 = W1 * IN1;
+            Matrix IN = Matrix.Mat1D(mat, InputNodeN);
+            z1 = W1 * IN;
             a1 = Sigmoid(z1);
             z2 = W2 * a1;
             a2 = Sigmoid(z2);
